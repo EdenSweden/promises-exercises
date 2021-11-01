@@ -9,6 +9,12 @@
 function mapPromise(promise, transformer){
   return new Promise((resolve, reject) => {
     /* IMPLEMENT ME!! */
+    promise.then(result => {
+      return transformer(result)})
+      .then(value => resolve(value))
+      .catch(error => reject(error));
+
+    promise.catch(error => reject(error));
   });
 }
 
@@ -20,8 +26,17 @@ function mapPromise(promise, transformer){
  * @returns {Promise<number>}
  */
 function squarePromise(numberPromise){
-  return numberPromise
-    .then(/* IMPLEMENT ME! */);
+  return new Promise((resolve, reject) => {
+  numberPromise.then(val => {
+    let result = val * val;
+      if(typeof result !== 'number' || isNaN(result)) {
+        reject('Cannot convert \'' + val + '\' to a number!')
+      } else {
+        resolve(result);
+        }
+      })
+      .catch(error => reject(error));
+    })
 }
 
 /**
@@ -31,8 +46,31 @@ function squarePromise(numberPromise){
  * @returns {Promise<number>}
  */
 function squarePromiseOrZero(promise){
-  return squarePromise(promise)
-    .catch(/* IMPLEMENT ME! */);
+  //return new Promise((resolve, reject) => {
+
+    return squarePromise(promise)
+    /*.then(result => {
+      if (typeof result == 'string'){
+        resolve(0);
+      } else {
+        resolve(result);
+      }
+    })*/
+    .catch(() => reject(0));
+
+    /*promise.then(val => {
+      let result = val * val;
+      if(typeof result != 'number' || isNaN(result)){
+        resolve(0);
+      } else {
+        resolve(result);
+      }
+    })
+    .catch(() => reject(0));
+  }
+  
+  
+  );*/
 }
 
 /**
