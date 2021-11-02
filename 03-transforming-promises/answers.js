@@ -46,31 +46,14 @@ function squarePromise(numberPromise){
  * @returns {Promise<number>}
  */
 function squarePromiseOrZero(promise){
-  //return new Promise((resolve, reject) => {
 
     return squarePromise(promise)
-    /*.then(result => {
-      if (typeof result == 'string'){
+    .catch(() => {
+      return new Promise((resolve, reject) => {
         resolve(0);
-      } else {
-        resolve(result);
-      }
-    })*/
-    .catch(() => reject(0));
-
-    /*promise.then(val => {
-      let result = val * val;
-      if(typeof result != 'number' || isNaN(result)){
-        resolve(0);
-      } else {
-        resolve(result);
-      }
-    })
-    .catch(() => reject(0));
-  }
-  
-  
-  );*/
+        });
+      
+    });
 }
 
 /**
@@ -80,7 +63,7 @@ function squarePromiseOrZero(promise){
  * @returns {Promise}
  */
 function switcheroo(promise){
-  return promise.then(/* IMPLEMENT ME */);
+  return promise.then(val => Promise.reject(val), err => Promise.resolve(err));
 }
 
 /**
